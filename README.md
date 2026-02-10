@@ -5,14 +5,14 @@ The project focuses on clean UI/UX, state management, and backend-driven data fl
 
 🚀 Key Features
 
-🎮 Live Puzzle Arena – Players can join an active session and solve a tile-based image puzzle
-⏱ Timed Gameplay – Countdown-based puzzle rounds
-🔄 Tile Swap Logic – Accurate piece swapping and validation
-🧑‍💼 Admin Control Panel – Start/end sessions and monitor players in real time
-📊 Leaderboard System – Ranks players based on completion time
-🗄 MongoDB Integration – Player progress and scores stored persistently
-🎨 Modern 3D UI – Dark theme with interactive depth and hover effects
-🛠 Tech Stack
+-🎮 Live Puzzle Arena – Players can join an active session and solve a tile-based image puzzle
+-⏱ Timed Gameplay – Countdown-based puzzle rounds
+-🔄 Tile Swap Logic – Accurate piece swapping and validation
+-🧑‍💼 Admin Control Panel – Start/end sessions and monitor players in real time
+-📊 Leaderboard System – Ranks players based on completion time
+-🗄 MongoDB Integration – Player progress and scores stored persistently
+-🎨 Modern 3D UI – Dark theme with interactive depth and hover effects
+-🛠 Tech Stack
 
     Frontend: React, CSS (3D UI, responsive design)
     Backend: Node.js, Express
@@ -21,31 +21,31 @@ The project focuses on clean UI/UX, state management, and backend-driven data fl
 
 📁 Project Structure
 
-jigsaw-puzzle/
-│
-├── backend/
-│   ├── routes/
-│   │   ├── admin.js
-│   │   ├── player.js
-│   │   └── session.js
-│   ├── models/
-│   │   └── Player.js
-│   ├── index.js
-│   └── .env
-│
-├── frontend/
-│   ├── src/
-│   │   ├── pages/
-│   │   │   ├── JoinArena.jsx
-│   │   │   ├── PuzzlePage.jsx
-│   │   │   ├── AdminPage.jsx
-│   │   │   └── CompletedPage.jsx
-│   │   ├── App.jsx
-│   │   ├── ui.css
-│   │   └── Admin.css
-│   └── vite.config.js
-│
-└── README.md
+    jigsaw-puzzle/
+    │
+    ├── backend/
+    │   ├── routes/
+    │   │   ├── admin.js
+    │   │   ├── player.js
+    │   │   └── session.js
+    │   ├── models/
+    │   │   └── Player.js
+    │   ├── index.js
+    │   └── .env
+    │
+    ├── frontend/
+    │   ├── src/
+    │   │   ├── pages/
+    │   │   │   ├── JoinArena.jsx
+    │   │   │   ├── PuzzlePage.jsx
+    │   │   │   ├── AdminPage.jsx
+    │   │   │   └── CompletedPage.jsx
+    │   │   ├── App.jsx
+    │   │   ├── ui.css
+    │   │   └── Admin.css
+    │   └── vite.config.js
+    │
+    └── README.md
 
 ▶️ How to Run the Project
 ✅ Prerequisites
