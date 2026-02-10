@@ -1,0 +1,206 @@
+/* ===============================
+   RESET
+================================ */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ===============================
+   COLOR PALETTE (LOCKED)
+================================ */
+:root {
+  --bg-main: #0B1220;
+  --bg-glow: #121826;
+
+  --card-top: #121826;
+  --card-bottom: #0B1220;
+
+  --text-primary: #E5E7EB;
+  --text-secondary: #9CA3AF;
+  --text-muted: #6B7280;
+
+  --accent-main: #00E676;
+  --accent-soft: rgba(0, 230, 118, 0.25);
+
+  --error-text: #ff6b6b;
+}
+
+/* ===============================
+   FULL PAGE BACKGROUND
+================================ */
+.page {
+  min-height: 100svh; /* mobile-safe */
+  width: 100%;
+  padding: env(safe-area-inset-top)
+           env(safe-area-inset-right)
+           env(safe-area-inset-bottom)
+           env(safe-area-inset-left);
+
+  background:
+    radial-gradient(
+      circle at top,
+      var(--bg-glow) 0%,
+      var(--bg-main) 65%
+    );
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+}
+
+/* ===============================
+   CARD
+================================ */
+.card {
+  width: min(92vw, 460px);
+  padding: 42px;
+  border-radius: 22px;
+
+  background: linear-gradient(
+    180deg,
+    var(--card-top),
+    var(--card-bottom)
+  );
+
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.85),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+  text-align: center;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Hover only on real hover devices */
+@media (hover: hover) {
+  .card:hover {
+    transform: translateY(-6px) scale(1.01);
+    box-shadow:
+      0 45px 100px rgba(0, 0, 0, 0.9),
+      0 0 35px rgba(0, 230, 118, 0.35);
+  }
+}
+
+/* ===============================
+   HEADINGS
+================================ */
+.card h2,
+.card h3 {
+  color: var(--text-primary);
+  font-size: 26px;
+  margin-bottom: 14px;
+  letter-spacing: 0.8px;
+}
+
+/* Completed state emphasis */
+.card h2 {
+  color: var(--accent-main);
+}
+
+/* ===============================
+   TEXT
+================================ */
+.card p {
+  color: var(--text-secondary);
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 26px;
+}
+
+/* ===============================
+   INPUT
+================================ */
+.card input {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 12px;
+
+  background: #050f1f;
+  border: 1px solid #1f2a44;
+
+  color: var(--text-primary);
+  font-size: 15px;
+  margin-bottom: 22px;
+  outline: none;
+}
+
+.card input::placeholder {
+  color: var(--text-muted);
+}
+
+.card input:focus {
+  border-color: var(--accent-main);
+  box-shadow: 0 0 0 2px var(--accent-soft);
+}
+
+/* ===============================
+   BUTTON
+================================ */
+.card button {
+  width: 100%;
+  padding: 16px;
+  border-radius: 14px;
+  border: none;
+
+  background: linear-gradient(
+    135deg,
+    var(--accent-main),
+    #00c853
+  );
+
+  color: #02140A;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  cursor: pointer;
+
+  box-shadow:
+    0 10px 30px rgba(0, 230, 118, 0.45),
+    0 0 30px rgba(0, 230, 118, 0.35);
+
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+@media (hover: hover) {
+  .card button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow:
+      0 14px 40px rgba(0, 230, 118, 0.55),
+      0 0 35px rgba(0, 230, 118, 0.6);
+  }
+}
+
+/* Disabled */
+.card button:disabled {
+  background: #1a253d;
+  color: #6a86a8;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ===============================
+   ERROR TEXT
+================================ */
+.error-text {
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--error-text);
+}
+
+/* ===============================
+   SMALL SCREENS
+================================ */
+@media (max-width: 420px) {
+  .card {
+    padding: 34px 26px;
+  }
+
+  .card h2,
+  .card h3 {
+    font-size: 22px;
+  }
+}
