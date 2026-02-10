@@ -5,19 +5,19 @@ The project focuses on clean UI/UX, state management, and backend-driven data fl
 
 🚀 Key Features
 
--🎮 Live Puzzle Arena – Players can join an active session and solve a tile-based image puzzle
--⏱ Timed Gameplay – Countdown-based puzzle rounds
--🔄 Tile Swap Logic – Accurate piece swapping and validation
--🧑‍💼 Admin Control Panel – Start/end sessions and monitor players in real time
--📊 Leaderboard System – Ranks players based on completion time
--🗄 MongoDB Integration – Player progress and scores stored persistently
--🎨 Modern 3D UI – Dark theme with interactive depth and hover effects
--🛠 Tech Stack
+    🎮 Live Puzzle Arena – Players can join an active session and solve a tile-based image puzzle
+    ⏱ Timed Gameplay – Countdown-based puzzle rounds
+    🔄 Tile Swap Logic – Accurate piece swapping and validation
+    🧑‍💼 Admin Control Panel – Start/end sessions and monitor players in real time
+    📊 Leaderboard System – Ranks players based on completion time
+    🗄 MongoDB Integration – Player progress and scores stored persistently
+    🎨 Modern 3D UI – Dark theme with interactive depth and hover effects
+    🛠 Tech Stack
 
-    Frontend: React, CSS (3D UI, responsive design)
-    Backend: Node.js, Express
-    Database: MongoDB
-    Architecture: REST API (no sockets)
+        Frontend: React, CSS (3D UI, responsive design)
+        Backend: Node.js, Express
+        Database: MongoDB
+        Architecture: REST API (no sockets)
 
 📁 Project Structure
 
