@@ -2,18 +2,19 @@ import { useEffect, useState } from "react";
 import "./ui.css";
 
 function CompletedPage() {
-  const [sessionStarted, setSessionStarted] = useState(false);
+  const [sessionActive, setSessionActive] = useState(false);
 
   useEffect(() => {
     const checkSession = async () => {
       try {
         const res = await fetch(
-          "https://jigsaw-backend-mnnx.onrender.com/session"
+          "http://localhost:5000/admin/session"
         );
         const data = await res.json();
 
-        // 🔥 ONLY UPDATE STATE — NO NAVIGATION
-        setSessionStarted(data.session.started);
+        // ✅ Use correct backend property
+        setSessionActive(data.session.active);
+
       } catch (err) {
         console.error("Session check failed", err);
       }
@@ -29,6 +30,11 @@ function CompletedPage() {
     <div className="page">
       <div className="card">
         <h2>✔ Puzzle Completed</h2>
+        <p>
+          {sessionActive
+            ? "Next round is active."
+            : "Waiting for admin to start next session."}
+        </p>
       </div>
     </div>
   );

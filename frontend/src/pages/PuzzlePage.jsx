@@ -18,63 +18,95 @@ function PuzzlePage() {
   const [timeUp, setTimeUp] = useState(false);
   const [sessionActive, setSessionActive] = useState(false);
   const [sessionChecked, setSessionChecked] = useState(false);
+  const [playerStarted, setPlayerStarted] = useState(false);
 
-  /* ---------------- SESSION ---------------- */
-
+  /* ---------------- SESSION CHECK ---------------- */
   useEffect(() => {
-    fetch("https://jigsaw-backend-mnnx.onrender.com/session")
-      .then(res => res.json())
-      .then(data => {
-        setSessionActive(data.session.started);
+    const checkSession = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/admin/session");
+        const data = await res.json();
+
+        setSessionActive(data.session?.active || false);
         setSessionChecked(true);
-      });
+
+      } catch (err) {
+        console.error("Session check failed", err);
+      }
+    };
+
+    checkSession();
   }, []);
 
+  /* ---------------- REGISTER PLAYER (ONLY ONCE) ---------------- */
   useEffect(() => {
-    if (!sessionChecked || !sessionActive) return;
-    fetch("https://jigsaw-backend-mnnx.onrender.com/player/start", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: teamName }),
-    });
-  }, [teamName, sessionChecked, sessionActive]);
+    if (!sessionChecked || !sessionActive || playerStarted) return;
+
+    const registerPlayer = async () => {
+      try {
+        await fetch("http://localhost:5000/player/start", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name: teamName }),
+        });
+
+        setPlayerStarted(true);
+
+      } catch (err) {
+        console.error("Player start error:", err);
+      }
+    };
+
+    registerPlayer();
+  }, [teamName, sessionChecked, sessionActive, playerStarted]);
 
   /* ---------------- SESSION WATCHER ---------------- */
-
   useEffect(() => {
     if (!sessionActive) return;
+
     const interval = setInterval(async () => {
-      const res = await fetch("https://jigsaw-backend-mnnx.onrender.com/session");
+      const res = await fetch("http://localhost:5000/admin/session");
       const data = await res.json();
-      if (!data.session.started) navigate("/completed");
+
+      if (!data.session?.active) {
+        navigate("/completed");
+      }
     }, 2000);
+
     return () => clearInterval(interval);
   }, [sessionActive, navigate]);
 
   /* ---------------- TIMER ---------------- */
-
   const autoEndGame = useCallback(async () => {
+    if (timeUp) return;
+
     setTimeUp(true);
-    await fetch("https://jigsaw-backend-mnnx.onrender.com/player/end", {
+
+    await fetch("http://localhost:5000/player/end", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name: teamName }),
     });
+
     navigate("/completed");
-  }, [teamName, navigate]);
+  }, [teamName, navigate, timeUp]);
 
   useEffect(() => {
     if (!sessionActive || timeUp) return;
+
     if (timeLeft <= 0) {
       autoEndGame();
       return;
     }
-    const timer = setInterval(() => setTimeLeft(t => t - 1), 1000);
+
+    const timer = setInterval(() => {
+      setTimeLeft((t) => t - 1);
+    }, 1000);
+
     return () => clearInterval(timer);
   }, [timeLeft, autoEndGame, sessionActive, timeUp]);
 
   /* ---------------- INIT PUZZLE ---------------- */
-
   useEffect(() => {
     if (!sessionActive) return;
 
@@ -104,10 +136,10 @@ function PuzzlePage() {
         y: positions[i].y,
       }))
     );
+
   }, [sessionActive]);
 
-  /* ---------------- CLICK / SWAP (FIXED) ---------------- */
-
+  /* ---------------- TILE SWAP ---------------- */
   const handleClick = (id) => {
     if (!sessionActive || timeUp) return;
 
@@ -121,11 +153,11 @@ function PuzzlePage() {
       return;
     }
 
-    setPieces(prev => {
-      const p1 = prev.find(p => p.id === selectedId);
-      const p2 = prev.find(p => p.id === id);
+    setPieces((prev) => {
+      const p1 = prev.find((p) => p.id === selectedId);
+      const p2 = prev.find((p) => p.id === id);
 
-      return prev.map(p => {
+      return prev.map((p) => {
         if (p.id === p1.id) return { ...p, x: p2.x, y: p2.y };
         if (p.id === p2.id) return { ...p, x: p1.x, y: p1.y };
         return p;
@@ -136,10 +168,9 @@ function PuzzlePage() {
   };
 
   /* ---------------- SUBMIT ---------------- */
-
   const handleSubmit = async () => {
     const solved = pieces.every(
-      p => p.x === p.correctX && p.y === p.correctY
+      (p) => p.x === p.correctX && p.y === p.correctY
     );
 
     if (!solved) {
@@ -147,16 +178,20 @@ function PuzzlePage() {
       return;
     }
 
-    await fetch("https://jigsaw-backend-mnnx.onrender.com/player/end", {
+    await fetch("http://localhost:5000/player/end", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name: teamName }),
     });
+
     navigate("/completed");
   };
 
-  if (!sessionChecked) return <h3 className="center">Checking session…</h3>;
-  if (!sessionActive) return <h2 className="center">Session Ended</h2>;
+  if (!sessionChecked)
+    return <h3 className="center">Checking session…</h3>;
+
+  if (!sessionActive)
+    return <h2 className="center">Session Ended</h2>;
 
   return (
     <div className="puzzle-stage">
@@ -166,7 +201,7 @@ function PuzzlePage() {
       </h3>
 
       <div className="board">
-        {pieces.map(p => (
+        {pieces.map((p) => (
           <div
             key={p.id}
             className={`tile ${selectedId === p.id ? "selected" : ""}`}

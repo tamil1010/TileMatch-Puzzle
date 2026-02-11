@@ -2,18 +2,20 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
-const adminRoutes = require("./routes/admin");
-const playerRoutes = require("./routes/player");
-
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect("mongodb://127.0.0.1:27017/arena");
+// Routes
+app.use("/admin", require("./routes/admin"));
+app.use("/player", require("./routes/player"));
 
-app.use("/admin", adminRoutes);
-app.use("/player", playerRoutes);
+// MongoDB connect
+mongoose.connect("mongodb://127.0.0.1:27017/arena")
+  .then(() => console.log("MongoDB Connected"))
+  .catch(err => console.log(err));
 
 app.listen(5000, () => {
-  console.log("Backend running on port 5000");
+  console.log("Server running on port 5000");
 });

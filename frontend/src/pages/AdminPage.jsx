@@ -5,7 +5,7 @@ import "./Admin.css";
 function AdminPage() {
   const [password, setPassword] = useState("");
   const [authorized, setAuthorized] = useState(false);
-  const [session, setSession] = useState({ started: false });
+  const [session, setSession] = useState({ active: false });
   const [players, setPlayers] = useState([]);
 
   /* ===============================
@@ -20,14 +20,14 @@ function AdminPage() {
      FETCH
   ================================ */
   const fetchSession = async () => {
-    const res = await fetch("https://jigsaw-backend-mnnx.onrender.com/session");
+    const res = await fetch("http://localhost:5000/admin/session");
     const data = await res.json();
     setSession(data.session);
   };
 
   const fetchPlayers = async () => {
     const res = await fetch(
-      "https://jigsaw-backend-mnnx.onrender.com/admin/players"
+      "http://localhost:5000/admin/players"
     );
     const data = await res.json();
     setPlayers(data);
@@ -46,6 +46,35 @@ function AdminPage() {
 
     return () => clearInterval(interval);
   }, [authorized]);
+
+  /* ===============================
+     ACTIONS
+  ================================ */
+  const startSession = async () => {
+    try {
+      await fetch(
+        "http://localhost:5000/admin/session/start",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" }
+        }
+      );
+
+      fetchSession();
+      fetchPlayers();
+
+    } catch (error) {
+      console.error("Start session error:", error);
+    }
+  };
+
+  const endSession = async () => {
+    await fetch(
+      "http://localhost:5000/admin/session/end",
+      { method: "POST" }
+    );
+    fetchSession();
+  };
 
   /* ===============================
      LOGIN UI
@@ -71,30 +100,10 @@ function AdminPage() {
   }
 
   /* ===============================
-     ACTIONS
-  ================================ */
-  const startSession = async () => {
-    await fetch(
-      "https://jigsaw-backend-mnnx.onrender.com/session/start",
-      { method: "POST" }
-    );
-    fetchSession();
-  };
-
-  const endSession = async () => {
-    await fetch(
-      "https://jigsaw-backend-mnnx.onrender.com/session/end",
-      { method: "POST" }
-    );
-    fetchSession();
-  };
-
-  /* ===============================
      ADMIN UI
   ================================ */
   return (
     <div className="admin-page">
-      {/* ===== CENTERED TOP STACK ===== */}
       <div className="admin-top">
         <h1 className="admin-title">Admin Control Panel</h1>
 
@@ -109,14 +118,13 @@ function AdminPage() {
 
         <div
           className={`session-status ${
-            session.started ? "active" : "inactive"
+            session.active ? "active" : "inactive"
           }`}
         >
-          {session.started ? "SESSION ACTIVE" : "SESSION INACTIVE"}
+          {session.active ? "SESSION ACTIVE" : "SESSION INACTIVE"}
         </div>
       </div>
 
-      {/* ===== CENTERED TABLE ===== */}
       <div className="table-wrapper">
         <div className="table-card">
           <table>
@@ -126,12 +134,15 @@ function AdminPage() {
                 <th>Name</th>
                 <th>Start Time</th>
                 <th>End Time</th>
+                <th>Score</th>
               </tr>
             </thead>
             <tbody>
               {players.map((p, i) => (
-                <tr key={p.name}>
-                  <td className="rank">{p.endTime ? i + 1 : "-"}</td>
+                <tr key={p._id}>
+                  <td className="rank">
+                    {p.endTime ? i + 1 : "-"}
+                  </td>
                   <td>{p.name}</td>
                   <td>
                     {p.startTime
@@ -141,9 +152,12 @@ function AdminPage() {
                   <td>
                     {p.endTime
                       ? new Date(p.endTime).toLocaleTimeString()
-                      : "Playing…"}
+                      : "-"}
                   </td>
-                </tr>
+                  <td className="rank">
+                    {p.endTime ? p.score : "-"}
+                  </td> 
+                </tr> 
               ))}
             </tbody>
           </table>

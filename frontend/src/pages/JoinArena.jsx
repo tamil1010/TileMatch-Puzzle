@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./ui.css";
 
 function JoinArena() {
   const [playerName, setPlayerName] = useState("");
@@ -12,19 +13,13 @@ function JoinArena() {
   /* ---------------- CHECK SESSION ---------------- */
 
   useEffect(() => {
-    let mounted = true;
-
     const checkSession = async () => {
       try {
-        const res = await fetch(
-          "https://jigsaw-backend-mnnx.onrender.com/session"
-        );
+        const res = await fetch("http://localhost:5000/admin/session");
         const data = await res.json();
 
-        if (mounted) {
-          setSessionStarted(data.session.started);
-          setSessionChecked(true);
-        }
+        setSessionStarted(data.session.active);
+        setSessionChecked(true);
       } catch (err) {
         console.error("Session check failed", err);
       }
@@ -33,10 +28,7 @@ function JoinArena() {
     checkSession();
     const interval = setInterval(checkSession, 2000);
 
-    return () => {
-      mounted = false;
-      clearInterval(interval);
-    };
+    return () => clearInterval(interval);
   }, []);
 
   /* ---------------- JOIN GAME ---------------- */
@@ -48,27 +40,30 @@ function JoinArena() {
     try {
       setJoining(true);
 
-      const res = await fetch(
-        "https://jigsaw-backend-mnnx.onrender.com/player/start",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name: playerName.trim() }),
-        }
-      );
+      const name = playerName.trim();
+
+      // 🔥 Try to create player
+      const res = await fetch("http://localhost:5000/player/start", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name }),
+      });
+
+      const data = await res.json();
 
       if (!res.ok) {
-        throw new Error("Join failed");
+        // If already exists or session issue → just navigate
+        navigate(`/puzzle/${encodeURIComponent(name)}`);
+        return;
       }
 
-      navigate(`/puzzle/${encodeURIComponent(playerName.trim())}`);
+      navigate(`/puzzle/${encodeURIComponent(name)}`);
+
     } catch (err) {
-      alert("Unable to join game. Try again.");
+      alert("Unable to join game.");
       setJoining(false);
     }
   };
-
-  /* ---------------- LOADING ---------------- */
 
   if (!sessionChecked) {
     return (
@@ -79,8 +74,6 @@ function JoinArena() {
       </div>
     );
   }
-
-  /* ---------------- UI ---------------- */
 
   return (
     <div className="page">
@@ -96,7 +89,7 @@ function JoinArena() {
         <input
           type="text"
           value={playerName}
-          onChange={e => setPlayerName(e.target.value)}
+          onChange={(e) => setPlayerName(e.target.value)}
           placeholder="Enter your name"
           disabled={!sessionStarted || joining}
         />

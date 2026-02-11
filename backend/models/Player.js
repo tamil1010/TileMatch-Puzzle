@@ -1,8 +1,14 @@
 const mongoose = require("mongoose");
 
 const PlayerSchema = new mongoose.Schema({
-  name: String,
-  score: Number,
+  name: {
+    type: String,
+    required: true
+  },
+  score: {
+    type: Number,
+    default: 0
+  },
   startTime: Date,
   endTime: Date
 });
