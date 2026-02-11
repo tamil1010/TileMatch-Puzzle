@@ -1,29 +1,29 @@
-#H1 📌 Project Description
+# 📌 Project Description
 
 Puzzle Arena is a real-time, web-based image puzzle game built using the MERN stack. The application features a competitive puzzle-solving environment where players join a live session, solve a timed image puzzle, and have their performance tracked and ranked by an admin-controlled panel.
 The project focuses on clean UI/UX, state management, and backend-driven data flow, demonstrating how frontend interactions are synchronized with MongoDB through RESTful APIs.
 
 
 
-#H1 🚀 Key Features
+# 🚀 Key Features
 
-    - Live Puzzle Arena – Players can join an active session and solve a tile-based image puzzle
-    - Timed Gameplay – Countdown-based puzzle rounds
-    - Tile Swap Logic – Accurate piece swapping and validation
-    -  Admin Control Panel – Start/end sessions and monitor players in real time
-    - Leaderboard System – Ranks players based on completion time
-    - MongoDB Integration – Player progress and scores stored persistently
-    - Modern 3D UI – Dark theme with interactive depth and hover effects
-    - Tech Stack
+- Live Puzzle Arena – Players can join an active session and solve a tile-based image puzzle
+- Timed Gameplay – Countdown-based puzzle rounds
+- Tile Swap Logic – Accurate piece swapping and validation
+-  Admin Control Panel – Start/end sessions and monitor players in real time
+- Leaderboard System – Ranks players based on completion time
+- MongoDB Integration – Player progress and scores stored persistently
+- Modern 3D UI – Dark theme with interactive depth and hover effects
+- Tech Stack
 
-        1. Frontend: React, CSS (3D UI, responsive design)
-        2. Backend: Node.js, Express
-        3. Database: MongoDB
-        4. Architecture: REST API (no sockets)
+    1. Frontend: React, CSS (3D UI, responsive design)
+    2. Backend: Node.js, Express
+    3. Database: MongoDB
+    4. Architecture: REST API (no sockets)
 
 
 
-#H1 📁 Project Structure
+# 📁 Project Structure
 
     jigsaw-puzzle/
     │
@@ -53,37 +53,37 @@ The project focuses on clean UI/UX, state management, and backend-driven data fl
 
 
 
-# H1 ▶️ How to Run the Project
+#  ▶️ How to Run the Project
 
-### H2 ✅ Prerequisites
+###  ✅ Prerequisites
 - Node.js (v16 or above)
 - MongoDB (local or MongoDB Atlas)
 - npm or yarn
 
-### H3 1️⃣ Clone the Repository
+###  1️⃣ Clone the Repository
 - git clone https://github.com/your-username/puzzle-arena.git
 - cd puzzle-arena
 
-### H3 2️⃣ Backend Setup
+###  2️⃣ Backend Setup
 - cd backend
 - npm install
 - Start backend server: npm start
 - Backend runs on: http://localhost:5000
 
-### H3 3️⃣ Frontend Setup
+###  3️⃣ Frontend Setup
 - cd frontend
 - npm install
 - npm run dev
 - Frontend runs on: http://localhost:5173
 
-### H3 4️⃣ Admin Access
+###  4️⃣ Admin Access
 - Navigate to /admin
 - Enter admin password (configured in code)
 - Start a session to allow players to join
 
 
 
-# H1 👤 Author
+#  👤 Author
 
 Tamilvani S
 
