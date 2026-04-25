@@ -1,4 +1,4 @@
-# 📌 Project Description
+# 🧩TileMatch-Puzzle
 
 Puzzle Arena is a real-time, web-based image puzzle game built using the MERN stack. The application features a competitive puzzle-solving environment where players join a live session, solve a timed image puzzle, and have their performance tracked and ranked by an admin-controlled panel.
 The project focuses on clean UI/UX, state management, and backend-driven data flow, demonstrating how frontend interactions are synchronized with MongoDB through RESTful APIs.
@@ -14,12 +14,14 @@ The project focuses on clean UI/UX, state management, and backend-driven data fl
 - Leaderboard System – Ranks players based on completion time
 - MongoDB Integration – Player progress and scores stored persistently
 - Modern 3D UI – Dark theme with interactive depth and hover effects
-- Tech Stack
 
-    1. Frontend: React, CSS (3D UI, responsive design)
-    2. Backend: Node.js, Express
-    3. Database: MongoDB
-    4. Architecture: REST API (no sockets)
+
+# 🛠 Tech Stack
+
+- Frontend: React, CSS (3D UI, responsive design)
+- Backend: Node.js, Express
+- Database: MongoDB
+- Architecture: REST API (no sockets)
 
 
 
@@ -50,41 +52,5 @@ The project focuses on clean UI/UX, state management, and backend-driven data fl
     │   └── vite.config.js
     │
     └── README.md
-
-
-
-#  ▶️ How to Run the Project
-
-###  ✅ Prerequisites
-- Node.js (v16 or above)
-- MongoDB (local or MongoDB Atlas)
-- npm or yarn
-
-###  1️⃣ Clone the Repository
-- git clone https://github.com/your-username/puzzle-arena.git
-- cd puzzle-arena
-
-###  2️⃣ Backend Setup
-- cd backend
-- npm install
-- Start backend server: npm start
-- Backend runs on: http://localhost:5000
-
-###  3️⃣ Frontend Setup
-- cd frontend
-- npm install
-- npm run dev
-- Frontend runs on: http://localhost:5173
-
-###  4️⃣ Admin Access
-- Navigate to /admin
-- Enter admin password (configured in code)
-- Start a session to allow players to join
-
-
-
-#  👤 Author
-
-Tamilvani S
 
 
